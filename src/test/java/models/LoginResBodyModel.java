@@ -10,6 +10,6 @@ public class LoginResBodyModel {
     String password;
     String token;
     String expires;
-    String createdDate;
+    String created_date;
     String isActive;
 }
