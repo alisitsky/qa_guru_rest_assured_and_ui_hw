@@ -9,8 +9,9 @@ import static io.restassured.RestAssured.with;
 import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
 
-public class LoginSpec {
-    public static RequestSpecification loginReqSpec = with()
+public class AddBookToCartSpec {
+
+    public static RequestSpecification addBookToCartReqSpec = with()
 //            .filter(withCustomTemplates())    // todo: починить (падает, если раскомментить)
             .contentType(ContentType.JSON)
             .log().uri()
@@ -18,11 +19,9 @@ public class LoginSpec {
             .log().method()
             .log().body();
 
-    public static ResponseSpecification loginResSpec = new ResponseSpecBuilder()
-            .expectStatusCode(200)
+    public static ResponseSpecification addBookToCartResSpec = new ResponseSpecBuilder()
+            .expectStatusCode(201)
             .log(STATUS)
             .log(BODY)
             .build();
 }
-
-
