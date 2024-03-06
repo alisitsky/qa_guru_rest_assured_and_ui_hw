@@ -1,5 +1,5 @@
 <html>
-<#-- @ftlvariable name="in.reqres.data" type="io.qameta.allure.attachment.http.HttpResponseAttachment" -->
+<#-- @ftlvariable name="data" type="io.qameta.allure.attachment.http.HttpResponseAttachment" -->
 <head>
     <meta http-equiv="content-type" content="text/html; charset = UTF-8">
     <script src="https://yastatic.net/jquery/2.2.3/jquery.min.js" crossorigin="anonymous"></script>
@@ -21,19 +21,19 @@
     </style>
 </head>
 <body>
-<div><h4>Status code</h4> <#if in.reqres.data.responseCode??>
-        <pre><code><b>${in.reqres.data.responseCode}</b></code></pre>
+<div><h4>Status code</h4> <#if data.responseCode??>
+        <pre><code><b>${data.responseCode}</b></code></pre>
     <#else>Unknown</#if></div>
-<#if in.reqres.data.url??>
+<#if data.url??>
 
     <div>
-    <pre><code>${in.reqres.data.url}</code></pre>
+    <pre><code>${data.url}</code></pre>
     </div></#if>
 
-<#if (in.reqres.data.headers)?has_content>
+<#if (data.headers)?has_content>
     <h4>Headers</h4>
     <div>
-        <#list in.reqres.data.headers as name, value>
+        <#list data.headers as name, value>
             <div>
                 <pre><code><b>${name}</b>: ${value}</code></pre>
             </div>
@@ -41,17 +41,17 @@
     </div>
 </#if>
 
-<#if in.reqres.data.body??>
+<#if data.body??>
     <h4>Body</h4>
     <div>
-        <pre><code>${in.reqres.data.body}</code></pre>
+        <pre><code>${data.body}</code></pre>
     </div>
 </#if>
 
-<#if (in.reqres.data.cookies)?has_content>
+<#if (data.cookies)?has_content>
     <h4>Cookies</h4>
     <div>
-        <#list in.reqres.data.cookies as name, value>
+        <#list data.cookies as name, value>
             <div>
                 <pre><code><b>${name}</b>: ${value}</code></pre>
             </div>

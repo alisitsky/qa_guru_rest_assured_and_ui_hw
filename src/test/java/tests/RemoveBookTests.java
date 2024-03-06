@@ -1,18 +1,24 @@
 package tests;
 
+import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.WebDriverRunner;
 import io.restassured.http.ContentType;
 import models.*;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.Cookie;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import static com.codeborne.selenide.Condition.*;
+import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.with;
 import static specs.LoginSpec.*;
 import static specs.AddBookToCartSpec.*;
+import static com.codeborne.selenide.Selenide.*;
 
 
 public class RemoveBookTests extends TestBase {
@@ -23,6 +29,8 @@ public class RemoveBookTests extends TestBase {
 //      - спецификации
 //  * Реализовать авторизацию с @WithLogin
 
+
+
     @Test
     public void RemoveItemTest(){
 
@@ -32,7 +40,7 @@ public class RemoveBookTests extends TestBase {
         loginReqBM.setPassword("Username42!");
 
         LoginResBodyModel loginResBM = step("Login", () ->
-            given(loginReqSpec)
+           given(loginReqSpec)
                     .body(loginReqBM)
             .when()
                     .post("/Account/v1/Login")
@@ -95,6 +103,26 @@ public class RemoveBookTests extends TestBase {
         );
 
         // Удалить книгу из корзины в UI
+        step("Remove book from cart", () -> {
+            open("https://demoqa.com/favicon.ico");
+            WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("token", loginResBM.getToken()));
+            WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("userID", loginResBM.getUserId()));
+            WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("expires", loginResBM.getExpires()));
+            open("https://demoqa.com/profile");
 
+            executeJavaScript("$('#fixedban').remove()");
+            executeJavaScript("$('footer').remove()");
+
+            sleep(500);
+            $$("span#delete-record-undefined").first().shouldBe(visible).click();
+            sleep(500);
+            $("button#closeSmallModal-ok").shouldBe(visible).click();
+            sleep(500);
+            confirm();
+            sleep(1000);
+
+            // проверяю, что книги нет в списке
+            $("div.rt-tr.-odd[role=row]:not(.-padRow)").should(disappear);
+        });
     }
 }
