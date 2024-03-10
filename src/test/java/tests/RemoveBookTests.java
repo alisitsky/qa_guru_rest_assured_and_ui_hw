@@ -4,6 +4,7 @@ import models.AddBookReqBodyModel;
 import models.BookItemsListResBodyModel;
 import models.LoginReqBodyModel;
 import models.LoginResBodyModel;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.ProfilePage;
 
@@ -17,20 +18,11 @@ import static specs.LoginSpec.loginResSpec;
 import static utils.RandomUtils.getModelForBookAdding;
 import static utils.RandomUtils.getRandomBookIsbn;
 
-
-
 public class RemoveBookTests extends TestBase {
-//    Разработать автотест на удаление товара из списка https://demoqa.com/profile
-//      + добавить степы
-//      + модели
-//      + спецификации
-//      + причесать шаг с ui
-//      - добавить аннотаций к тестам по примеру прошлых работ
-//      - добавить аттачи в аллюр
 
-//  * Реализовать авторизацию с @WithLogin
 
     @Test
+    @DisplayName("Remove item from cart")
     public void removeItemTest() {
 
         LoginReqBodyModel loginReqBM = new LoginReqBodyModel(userName, password);

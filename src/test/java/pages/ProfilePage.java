@@ -1,5 +1,6 @@
 package pages;
 
+import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
 import org.openqa.selenium.Cookie;
 
@@ -11,6 +12,10 @@ import static data.TestData.profilePagePath;
 
 public class ProfilePage {
 
+    SelenideElement removeItemButton = $$("span#delete-record-undefined").first(),
+                    confirmModalButton = $("button#closeSmallModal-ok"),
+                    itemInCart = $("div.rt-tr.-odd[role=row]:not(.-padRow)");
+
     public ProfilePage openAndAuth(String userId, String token, String expires) {
         open(faviconPath);
         WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("userID", userId));
@@ -21,13 +26,13 @@ public class ProfilePage {
     }
 
     public ProfilePage removeFirstItem() {
-        $$("span#delete-record-undefined").first().shouldBe(visible).click();
-        $("button#closeSmallModal-ok").shouldBe(visible).click();
+        removeItemButton.shouldBe(visible).click();
+        confirmModalButton.shouldBe(visible).click();
         return this;
     }
 
     public ProfilePage itemIsAbsent() {
-        $("div.rt-tr.-odd[role=row]:not(.-padRow)").should(disappear);
+        itemInCart.should(disappear);
         return this;
     }
 
