@@ -20,7 +20,6 @@ import static utils.RandomUtils.getRandomBookIsbn;
 
 public class RemoveBookTests extends TestBase {
 
-
     @Test
     @DisplayName("Remove item from cart")
     public void removeItemTest() {
