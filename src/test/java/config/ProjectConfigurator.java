@@ -23,7 +23,8 @@ public class ProjectConfigurator {
         Configuration.browserSize = webConfig.browserSize();
         Configuration.pageLoadStrategy = "eager";
         if (webConfig.isRemote()) {
-            Configuration.remote = String.valueOf(webConfig.remoteUrl());
+//            Configuration.remote = String.valueOf(webConfig.remoteUrl());
+            Configuration.remote = "https://user1:1234@" + System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud") + "/wd/hub";
             DesiredCapabilities capabilities = new DesiredCapabilities();
             capabilities.setCapability("selenoid:options", Map.<String, Object>of(
                     "enableVNC", true,
