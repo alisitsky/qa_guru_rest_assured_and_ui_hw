@@ -22,6 +22,7 @@ public class ProfilePage {
         WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("token", token));
         WebDriverRunner.getWebDriver().manage().addCookie(new Cookie("expires", expires));
         open(profilePagePath);
+        sleep(1000);
         return this;
     }
 
@@ -38,6 +39,7 @@ public class ProfilePage {
 
     public ProfilePage confirmModal(){
         confirm();
+        sleep(1000);
         return this;
     }
 }
