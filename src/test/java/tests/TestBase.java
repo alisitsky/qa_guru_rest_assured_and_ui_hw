@@ -18,13 +18,27 @@ import static utils.AttachUtils.*;
 
 public class TestBase {
 
-    private static final WebConfig webConfig = ConfigReader.Instance.read();
+//    private static final WebConfig webConfig = ConfigReader.Instance.read();
 
     @BeforeAll
     static void beforeAll() {
-        ProjectConfigurator projectConfigurator = new ProjectConfigurator(webConfig);
-        projectConfigurator.setWebConfig();
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
+//        ProjectConfigurator projectConfigurator = new ProjectConfigurator(webConfig);
+//        projectConfigurator.setWebConfig();
+
+        Configuration.browser = System.getProperty("browser", "chrome");
+        Configuration.browserVersion = System.getProperty("browserVersion");
+        Configuration.browserSize = System.getProperty("browserSize", "1920x1080");
+        Configuration.baseUrl = "https://demoqa.com";
+        Configuration.pageLoadStrategy = "eager";
+        Configuration.holdBrowserOpen = false;
+        Configuration.remote = "https://user1:1234@" + System.getProperty("remoteBrowserUrl", "selenoid.autotests.cloud") + "/wd/hub";
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("selenoid:options", Map.<String, Object>of(
+                "enableVNC", true,
+                "enableVideo", true
+        ));
+        Configuration.browserCapabilities = capabilities;
     }
 
     @AfterEach
